@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     eventName: {
+        marginTop: 60,
         fontSize: 24,
         fontWeight: 'bold',
         color: 'black'
@@ -44,5 +45,10 @@ export const styles = StyleSheet.create({
         marginTop: 36,
         marginBottom: 42,
     },
+    empty:{
+        color: "#FFF",
+        fontSize: 14,
+        textAlign: "center"
+    }
 
 })
