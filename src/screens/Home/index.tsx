@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native';
 import {styles} from './styles'
 
 import { Participant } from './components/Participant';
 
 export default function Home(){
-    const participantes = ["Naizio", "Ana", "Helô", "Natan", "Geovana", "Harry", "lares", "Janderson", "Luiz", "Gabriel"];
+
+    const [participants, setparticipants] = useState<string[]>([]);
+    const [participantName, setparticipantName] = useState("");
+
 
     function handleParticipantAdd(){
-        if(participantes.includes("Ana")){
+        if(participants.includes(participantName)){
           return Alert.alert("Participante existe" , "Já existe um participante com esse nome")  
         }
-        console.log('Adicionar participante')
+        
+        setparticipants(prevState => [...prevState, participantName]);
+        setparticipantName('');
     }
 
     function handleParticipantRemove( name: string){
+    
         Alert.alert("Remover", `Remover o participante ${name}?`, [
             {
                 text: 'Sim',
-                onPress: () => Alert.alert("Deletado")
+                onPress: () => setparticipants(prevState => prevState.filter(participants => participants !== name))
             },
             {
                 text: 'Não',
@@ -37,6 +43,8 @@ export default function Home(){
                     style={styles.imput}
                     placeholder='Nome do participante'
                     placeholderTextColor={"#FFF"}
+                    onChangeText={setparticipantName}
+                    value={participantName}
                 />
                 <TouchableOpacity style={styles.button} onPress={handleParticipantAdd}>
                     <Text style={styles.text}> + </Text>
@@ -44,7 +52,7 @@ export default function Home(){
             </View>
 
             <FlatList
-                data={participantes}
+                data={participants}
                 keyExtractor={item => item}
                 renderItem={({item}) => (
                     <Participant 
